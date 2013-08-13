@@ -1,0 +1,41 @@
+/*
+  Andor Salga
+  RWB
+  Processing compliant
+*/
+
+int SIZE = 80;
+
+void setup(){
+  size(300, 300);
+}
+
+void draw(){
+  noStroke();
+  fill(255, 0, 0, 5);
+  rect(0, 0, width, height);
+
+  stroke(0);
+  strokeWeight(3.0);
+
+  fill(255, 15);
+
+  // move to the center
+  translate(width/2.0, height/2.0);
+
+  // bounce up and down
+  translate(0.0, sin(frameCount/20.0) *30.0);
+
+  // rotate around center
+  rotate(cos(frameCount/100.0) * 3.0 );
+
+  // give some random movement
+  translate( 
+    cos(frameCount/20.0) * 20.0,
+    sin(frameCount/30.0) * 20.0
+  );
+
+  // draw in center
+  rect(-SIZE/2, -SIZE/2, SIZE, SIZE);
+}
+

@@ -1,0 +1,322 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <script src="../../mirror/codemirror.js" type="text/javascript"></script>
+    <script src="../../mirror/mirrorframe.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="../../mirror/docs.css"/>
+  </head>
+  
+  <body style="margin: 0px 0px 0px 0px;">
+
+<!------------------------------------------------->
+<!------------------------------------------------->
+<!------------------------------------------------->
+
+  <textarea id="code" border="1">
+<html>
+
+<head>
+<title>SIGGRAPH 2011</title>
+
+<script type="text/javascript" src="sylvester.js"></script>
+<script type="text/javascript" src="glUtils.js"></script>
+
+<script id="shader-fs" type="x-shader/x-fragment">
+  #ifdef GL_ES
+  precision highp float;
+  #endif
+
+  varying vec2 vTextureCoord;
+  uniform sampler2D uSampler;
+
+  void main(void) {
+    gl_FragColor = texture2D(uSampler, vTextureCoord);
+  }
+</script>
+
+<script id="shader-vs" type="x-shader/x-vertex">
+  attribute vec3 aVertexPosition;
+  attribute vec2 aTextureCoord;
+
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+
+  varying vec2 vTextureCoord;
+
+  void main(void) {
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
+  }
+</script>
+
+<script type="text/javascript">
+  var viewportWidth,
+      viewportHeight;
+      
+  var gl;
+  function initGL(canvas) {
+    try {
+      gl = canvas.getContext("experimental-webgl");
+      viewportWidth = canvas.width;
+      viewportHeight = canvas.height;
+    } catch(e) {
+    }
+    if (!gl) {
+      alert("Could not initialise WebGL, sorry :-(");
+    }
+  }
+
+  function getShader(gl, id) {
+    var shaderScript = document.getElementById(id);
+
+    var str = "";
+    var k = shaderScript.firstChild;
+    while (k) {
+      if (k.nodeType == 3) {
+        str += k.textContent;
+      }
+      k = k.nextSibling;
+    }
+
+    var shader;
+    if (shaderScript.type == "x-shader/x-fragment") {
+      shader = gl.createShader(gl.FRAGMENT_SHADER);
+    } else if (shaderScript.type == "x-shader/x-vertex") {
+      shader = gl.createShader(gl.VERTEX_SHADER);
+    }
+    
+    gl.shaderSource(shader, str);
+    gl.compileShader(shader);
+
+    return shader;
+  }
+
+  var shaderProgram;
+  function initShaders() {
+    var fragmentShader = getShader(gl, "shader-fs");
+    var vertexShader = getShader(gl, "shader-vs");
+
+    shaderProgram = gl.createProgram();
+    gl.attachShader(shaderProgram, vertexShader);
+    gl.attachShader(shaderProgram, fragmentShader);
+    gl.linkProgram(shaderProgram);
+
+    gl.useProgram(shaderProgram);
+
+    shaderProgram.vertexPositionAttribute = 
+      gl.getAttribLocation(shaderProgram, "aVertexPosition");
+    gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+
+    shaderProgram.textureCoordAttribute = 
+      gl.getAttribLocation(shaderProgram, "aTextureCoord");
+    gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
+
+    shaderProgram.pMatrixUniform = 
+      gl.getUniformLocation(shaderProgram, "uPMatrix");
+      
+    shaderProgram.mvMatrixUniform = 
+      gl.getUniformLocation(shaderProgram, "uMVMatrix");
+    shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, "uSampler");
+  }
+
+  var webGLTexObj;
+
+  function initTexture() {
+  
+    // Create a JavaScript Image object
+    var jsBrickImage = new Image();
+    jsBrickImage.src = "bricks.jpg";
+    
+    // create a WebGL Texture
+    webGLTexObj = gl.createTexture();
+
+    jsBrickImage.onload = function() {
+      gl.bindTexture(gl.TEXTURE_2D, webGLTexObj);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, jsBrickImage);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+      gl.generateMipmap(gl.TEXTURE_2D);
+    }
+  }
+
+  var mvMatrix;
+
+  function loadIdentity() {
+    mvMatrix = Matrix.I(4);
+  }
+
+  function multMatrix(m) {
+    mvMatrix = mvMatrix.x(m);
+  }
+
+  function mvTranslate(v) {
+    var m = Matrix.Translation($V([v[0], v[1], v[2]])).ensure4x4();
+    multMatrix(m);
+  }
+
+  function mvRotate(ang, v) {
+    var arad = ang * Math.PI / 180.0;
+    var m = Matrix.Rotation(arad, $V([v[0], v[1], v[2]])).ensure4x4();
+    multMatrix(m);
+  }
+
+  var pMatrix;
+  function perspective(fovy, aspect, znear, zfar) {
+    pMatrix = makePerspective(fovy, aspect, znear, zfar);
+  }
+
+  function setMatrixUniforms() {
+    gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, new Float32Array(pMatrix.flatten()));
+    gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, new Float32Array(mvMatrix.flatten()));
+  }
+  
+  var xRot = 0;
+  var xSpeed = 10;
+
+  var yRot = 0;
+  var ySpeed = -10;
+
+  var z = -5;
+  
+  var currentlyPressedKeys = Object();
+
+  function handleKeyDown(event) {
+    currentlyPressedKeys[event.keyCode] = true;
+  }
+
+  function handleKeyUp(event) {
+    currentlyPressedKeys[event.keyCode] = false;
+  }
+
+  function handleKeys() {
+    if (currentlyPressedKeys[38]) { // up
+      z += 0.05;
+    }
+    
+    if (currentlyPressedKeys[40]) { // down
+      z -= 0.05;
+    }
+  }
+
+  // Vertex Buffer Objects
+  var cubeVertVBO;
+  var cubeTexVBO;
+    
+  function initBuffers() {
+    
+    cubeVertVBO = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertVBO);
+    
+    var vertices = [
+      -1, -1,  0,
+       1, -1,  0,
+       1,  1,  0,
+       
+       1,  1,  0,
+      -1,  1,  0,
+      -1, -1,  0];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    
+    cubeTexVBO = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, cubeTexVBO);
+    var texCoords = [
+      0, 0,
+      1, 0,
+      1, 1,
+      
+      1, 1,
+      0, 1,
+      0, 0];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoords), gl.STATIC_DRAW);
+  }
+
+  function drawScene() {
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    perspective(45, viewportWidth / viewportHeight, 0.1, 100.0);
+    loadIdentity();
+
+    mvTranslate([0.0, 0.0, z]);
+
+    mvRotate(xRot, [1, 0, 0]);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertVBO);
+    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, cubeTexVBO);
+    gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, 2, gl.FLOAT, false, 0, 0);
+
+    gl.activeTexture(gl.TEXTURE0);
+    gl.uniform1i(shaderProgram.samplerUniform, 0);
+
+    setMatrixUniforms();
+    
+    // 36 = 6 sides * 2 triangles per side * 3 verts per triangle
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  }
+  
+  var lastTime = 0;
+  function animate() {
+    var timeNow = new Date().getTime();
+    if (lastTime != 0) {
+      var elapsed = timeNow - lastTime;
+
+      xRot += (xSpeed * elapsed) / 1000.0;
+      yRot += (ySpeed * elapsed) / 1000.0;
+    }
+    lastTime = timeNow;
+  }
+
+  function tick() {
+    handleKeys();
+    drawScene();
+    animate();
+  }
+
+  function webGLStart() {
+    var canvas = document.getElementById("cvs");
+    initGL(canvas);
+    initTexture();
+    initBuffers();
+    initShaders();
+
+    gl.clearColor(0.8, 0.8, 0.8, 1.0);
+    gl.enable(gl.DEPTH_TEST);
+
+    document.onkeydown = handleKeyDown;
+    document.onkeyup = handleKeyUp;
+
+    setInterval(tick, 15);
+  }
+</script>
+
+</head>
+
+<body onload="webGLStart();">
+  <canvas id="cvs" width="500" height="500"></canvas>
+</body>
+
+</html>
+</textarea>
+<!------------------------------------------------->
+<!------------------------------------------------->
+<!------------------------------------------------->
+
+  <script type="text/javascript">
+    var textarea = document.getElementById('code');
+    
+    var editor = new CodeMirror(CodeMirror.replace(textarea), {
+      height: "620px",
+      width: "100%",
+      content: textarea.value,
+      parserfile: ["tokenizejavascript.js", "parsejavascript.js"],
+      stylesheet: "../../mirror/css/jscolors.css",
+      path: "../../mirror/js/",
+     // lineNumbers: true,
+      readOnly: true,
+      autoMatchParens: true
+    });
+  </script>
+
+  </body>
+</html>

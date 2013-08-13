@@ -1,0 +1,30 @@
+<html><div style="z-index: 10000; position: fixed; bottom: 0px; width: 100%; height: 15%; font-family: sans-serif; color: rgb(204, 204, 204); background-color: black;"><div title="Double-click to toggle log minimization" style="height: 5px; margin-top: -5px; cursor: n-resize; background-color: darkgrey;"></div><div style="position: relative; font-family: monospace; overflow: auto; height: 100%; padding-top: 5px;"><div style="min-height: 16px;" title="15:44:39"><div style="font-size: 12px; margin: 0pt 8px; max-width: 100%; white-space: pre-wrap; overflow: auto;">Unable to execute pjs sketch: TypeError: document.defaultView.getComputedStyle(curElement, null) is null</div></div></div><div title="Close Log" style="position: absolute; top: 5px; right: 20px; color: rgb(17, 17, 17); border-radius: 4px 4px 4px 4px; cursor: pointer; font-weight: normal; text-align: center; padding: 3px 5px; background-color: rgb(51, 51, 51); font-size: 12px;">✖</div></div><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="index_data_002/xbps.js"></script><script language="javascript" type="text/javascript" src="index_data_002/psapi.js"></script><script language="javascript" type="text/javascript" src="index_data_002/mjs.js"></script><script language="javascript" type="text/javascript" src="index_data_002/asc.js"></script><script language="javascript" type="text/javascript" src="index_data_002/psi.js"></script><script language="javascript" type="text/javascript" src="index_data_002/pts.js"></script><script language="javascript" type="text/javascript" src="index_data_002/ply.js"></script><script language="javascript" type="text/javascript" src="index_data_002/hps0.js"></script><script language="javascript" type="text/javascript" src="index_data_002/psi2.js"></script>
+    <script src="index_data_002/processing.js"></script>
+    <script src="index_data_002/podium.txt"></script>
+  <style>
+  html{
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  body{
+    margin:0px 0px 0px 0px;
+  }
+  </style></head> 
+  
+  
+  <body>
+    <canvas id="museum" data-processing-sources="museum.js user.js keyboard.js utils.js"></canvas>
+
+    <!--
+      When the museum is loaded we don't want to display the xbps
+      canvas since the user won't be looking at a point cloud object.
+      So set opacity to 0.
+    -->
+    <canvas id="xbps" width="400" height="400" style="opacity:0; border-radius:15px;position:absolute;top: 100; left: 200px; -moz-box-shadow:0px 0px 20px black;"></canvas>
+    <span id="pjsFPS"></span><span style="width:30px;"></span>
+    <span id="xbpsFPS"></span>
+  
+
+</body></html>

@@ -1,0 +1,100 @@
+/*
+  Andor Salga
+  Sol
+  Processing compliant
+*/
+import processing.opengl.*;
+float rotEarth = 0.0;
+float rotMoon = 0.0;
+float zoom = 0;
+PFont infoFont;
+int red=0;
+int blue=100;
+int green=150;
+int redinc=1;
+int blueinc=1;
+int greeninc=1;
+int lighty = 100;
+int lightz = 400;
+int lightx = 0;
+float shine =1;
+float shineinc=0.1;
+void setup(){
+  size(450, 450, OPENGL);
+  noStroke();
+  infoFont = createFont("Arial", 28);
+  textFont(infoFont);
+}
+void displayText(){
+  fill(25, 70, 20);
+  textFont(infoFont); 
+  text( "FPS: " + int(frameRate), 0, 30); 
+}
+void draw()
+{
+  background(0);
+//  displayText();
+  lightSpecular(red, blue, green);
+  if(red == 255){
+      redinc=-1;
+  }
+  else if(red == 0){
+      redinc=1;
+  }
+  if(green == 255){
+      greeninc=-1;
+  }
+  else if(green == 0){
+      greeninc=1;
+  }
+  if(blue == 255){
+      blueinc=-1;
+  }
+  else if(blue == 0){
+      blueinc=1;
+  }
+  
+  if(shine == 5.0){
+      shineinc=-0.2;
+  }
+  else if(shine == 0){
+      shineinc=0.2;
+  }
+  red+=redinc;
+  blue+=blueinc;
+  green+=greeninc;
+  lightx+=blueinc*3;
+  lighty+=redinc*3;
+  lightz+=greeninc*3;
+  shine+=shineinc;
+  pointLight(200, 200, 200, lightx, lighty, lightz);
+  specular(204, 102, 0);
+  shininess(shine);
+  // push matrix to center of the viewport
+  pushMatrix();
+  translate(width/2, height/2, 150 + zoom);
+  
+  // draw the sun
+  fill(255,0,0);
+  sphere(40);
+  
+  // push on another matrix and rotate and trans
+  pushMatrix();
+  rotateY(rotEarth += 0.01);
+  translate(0, 0, 80);
+  
+  fill(25, 70, 20);
+  
+  sphereDetail(int(zoom + 16));
+  sphere(25);
+  
+  pushMatrix();
+  rotateZ(rotMoon += 0.08);
+  translate(0, 40, 0);
+  fill(128, 128, 128);
+  sphere(10);
+  popMatrix();
+  popMatrix();
+  popMatrix();
+}
+

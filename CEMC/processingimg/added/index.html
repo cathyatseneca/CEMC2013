@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>WebGL IAP MIT 2011</title>
+    <link href="index_files/style.css" rel="stylesheet" type="text/css" media="screen">
+    
+    <script>
+    var emptyFunc = function(){};
+    
+    var slideFuncs = {current: {onIn: emptyFunc, onOut: emptyFunc}};
+    
+    function startDemo(frameId, src){
+      var f = document.getElementById(frameId);
+      f.src = src;
+      f.marginHeight = 0;
+      f.scrolling = 'no';
+    }
+    
+    function stopDemo(frameId){
+      document.getElementById(frameId).src = "";
+    }
+    
+    var slideIndex = 0;
+    
+    function incrementSlideIndex(){
+      slideIndex++;
+    }
+    </script>
+    
+  </head>
+
+  <body>
+    <div class="presentation">
+      <div class="slides">
+
+
+        <script>incrementSlideIndex();</script>
+        <div class="slide current">          
+          <section class="center intro">
+            <hgroup>
+            <iframe marginheight="0" src="index_files/index.html" id="banner" style="border: 0px none; margin-left: 0px;" height="120" scrolling="no" width="100%"></iframe>
+             <script>             
+             slideFuncs['slide-' + slideIndex] = {
+               onIn: function(){startDemo("banner", '../banner/index.html');},
+               onOut: function(){stopDemo("banner");}
+             };
+             </script>
+
+              <h1>Processing.js<br> Sketching with &lt;canvas&gt;</h1>
+              
+              <p>
+              Daniel Hodgin<br>
+              Andor Salga<br>
+              Catherine Leung<br>
+              </p>
+             <p>Seneca College</p>
+              <br>
+              <p>processingjs.org</p>
+                
+            </hgroup>
+            <div style="float: 'left';">
+            <div id="footerlogo" ;="" style="width:400px; ">
+            </div>
+            <img src="index_files/SenecaLogo.jpg" width="150px"><img src="index_files/OSS_003_notext.png" width="50px"><img src="index_files/processingjs.gif" width="50px">
+            </div>
+            
+          </section>
+        <span class="counter">1</span></div>
+
+
+
+        <script>incrementSlideIndex();</script>
+        <div class="slide future">
+          <header>The Processing Language</header>
+          <section>
+          <ul>
+          <li>MIT - 2000</li>
+          <li>Ben Fry and Casey Rheas</li>
+          <li>Easy to use graphics programming language for designers and artists</li>
+          </ul>
+          </section>
+        <span class="counter">2</span></div>
+
+        <script>incrementSlideIndex();</script>
+        <div class="slide far-future">
+          <header>Processing examples</header>
+          <section>
+     <iframe id="processingimg" height="500" width="800"></iframe>
+          <script>             
+             slideFuncs['slide-' + slideIndex] = {
+               onIn: function(){startDemo("processingimg", '../processingimg/index.html');},
+               onOut: function(){stopDemo("processingimg");}
+             };
+             </script>
+         
+          </section>
+        <span class="counter">3</span></div>
+        
+        
+        <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Processing on the web</header>
+          <section>
+            <ul>
+              <li>Processing is written in Java</li>
+              <li>requires plugins</li>
+              <li>limited interaction with other web content</li>
+            </ul>      
+          </section>
+        <span class="counter">4</span></div>
+        
+        
+        <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Processing.js - A brief history</header>
+          <section>
+        <iframe id="gource" height="500" width="1500"></iframe>
+          <script>             
+             slideFuncs['slide-' + slideIndex] = {
+               onIn: function(){startDemo("gource", '../gource/index.html');},
+               onOut: function(){stopDemo("gource");}
+             };
+             </script>
+          </section>
+          <footer>     <p>This slide is made with gource, popcorn.js and processing.js</p></footer>
+        <span class="counter">5</span></div>
+                
+
+        <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Processing.js</header>
+         <section>
+         
+                     <ul>
+          <li>JavaScript Integration</li>
+          <li>Parser</li>
+          <li>Browser Unification</li>
+          </ul> 
+          </section>          
+        <span class="counter">6</span></div>
+        
+        
+        
+        <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Virion - Facebook Game</header>
+          <section>
+<video controls="controls" style="float: left; width: 800px;" id="video" src="index_files/virion.webm">
+    </video>
+              </section>
+        <span class="counter">7</span></div>
+        
+        
+        
+    
+        
+        <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Andor Salga</header>
+           <section>
+            <ul>
+              <li>C3DL (3D game framework)</li>
+              <li>Processing.js</li>
+              <li>XB PointStream</li>
+            </ul>      
+          </section>
+          <!-- <footer><p>This slide is made with gource, popcorn.js and processing.js</p></footer>-->
+        <span class="counter">8</span></div>
+        
+        
+        <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>What is WebGL?</header>
+           <section>
+            <ul>
+              <li>JavaScript API</li>
+              <li>Based on OpenGL ES 2.0</li>
+              <li>Plugin-free 3D</li>
+              <li>Solved 3D on the Web?</li>
+            </ul>      
+          </section>
+          <!-- <footer><p>This slide is made with gource, popcorn.js and processing.js</p></footer>-->
+        <span class="counter">9</span></div>
+        
+      <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Can I use it?</header>
+           <section>
+            <ul>
+              <li>Firefox</li>
+              <li>Chrome</li>
+              <li>Prerelease Safari</li>
+              <li>Prerelease Opera</li>
+              <li>Plugins for IE</li>
+            </ul>      
+          </section>
+          <!-- <footer><p>This slide is made with gource, popcorn.js and processing.js</p></footer>-->
+        <span class="counter">10</span></div>
+
+        
+        
+      <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>WebGL in depth</header>
+           <section>
+            <ul>
+              <li>Crazy amount of code here</li>
+            </ul>      
+          </section>
+          <!-- <footer><p>This slide is made with gource, popcorn.js and processing.js</p></footer>-->
+        <span class="counter">11</span></div>
+        
+        
+      <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Processing.js 3D</header>
+           <section>
+            <ul>
+              <li>Not so much code here</li>
+            </ul>      
+          </section>
+          <!-- <footer><p>This slide is made with gource, popcorn.js and processing.js</p></footer>-->
+        <span class="counter">12</span></div>
+        
+        
+      <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>More interesting 3D Sketch</header>
+          <section class="intro center">
+          <br>
+          <br>
+          <iframe src="index_files/index_002.html" marginwidth="0" marginheight="0" frameborder="3" height="90%" width="95%"></iframe>
+                   <script>             
+             slideFuncs['slide-' + slideIndex] = {
+               onIn: function(){startDemo("museum", '../andors jazz/virtual museum/demos/museum/index.html');},
+               onOut: function(){stopDemo("museum");}
+             };
+             </script>
+
+          </section>
+        <span class="counter">13</span></div>
+                
+        
+        
+      <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Performance issues</header>
+           <section>
+            <ul>
+              <li>Always performance issues</li>
+            </ul>      
+          </section>
+          <!-- <footer><p>This slide is made with gource, popcorn.js and processing.js</p></footer>-->
+        <span class="counter">14</span></div>
+        
+        
+
+        
+      <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Current work</header>
+           <section>
+            <ul>
+              <li>Always performance issues</li>
+            </ul>      
+          </section>
+          <!-- <footer><p>This slide is made with gource, popcorn.js and processing.js</p></footer>-->
+        <span class="counter">15</span></div>
+        
+        
+        
+
+               
+        <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Performance boost</header>
+          <section class="intro center">
+          <br>
+          <br>
+          <iframe src="index_files/index_003.html" marginwidth="0" marginheight="0" frameborder="3" height="90%" width="95%"></iframe>
+                  <script>             
+             slideFuncs['slide-' + slideIndex] = {
+               onIn: function(){startDemo("objloader", '../andors jazz/obj loader/index.html');},
+               onOut: function(){stopDemo("objloader");}
+          </section>
+        </div>
+        
+        
+        
+       
+        <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Thank you!</header>
+          <section class="intro center">
+          <br>
+          <br>
+          <iframe src="index_files/index_004.html" marginwidth="0" marginheight="0" frameborder="3" height="90%" width="95%"></iframe>
+          </section>
+        <span class="counter">17</span></div>
+        
+        
+          
+        
+      <script>incrementSlideIndex();</script>
+        <div class="slide distant-future">
+          <header>Resources</header>
+           <section>
+            <ul>
+              <li><a>Processing.org</a></li>
+              <li><a>Processingjs.org</a></li>
+              <li><a>Seneca CDOT</a></li>
+            </ul>      
+          </section>
+          <!-- <footer><p>This slide is made with gource, popcorn.js and processing.js</p></footer>-->
+        <span class="counter">18</span></div>
+
+
+    </section><span class="counter">16</span></div> <!-- end presentation -->
+    <script src="index_files/slides.js"></script>
+  
+
+
+</div></div></body></html>

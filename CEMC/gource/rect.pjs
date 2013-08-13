@@ -1,0 +1,17 @@
+
+
+void setup() {
+  size(400, 300); 
+  noStroke();
+  colorMode(RGB, 255, 255, 255, 100);
+  rectMode(CENTER);
+}
+void draw() {
+  background(50); 
+  float s = width/2 + sin(frameCount/30) * 100;
+  float c = height/2 + cos(frameCount/30) * 100;
+  fill(100 + c, 0, 0, 80);
+  rect(s, height/2, c/2+10, c/2+10);
+  fill(0,0,100+s, 80);
+  rect(width-s, height/2, ((height-c)/2)+10, ((height-c)/2)+10);
+}

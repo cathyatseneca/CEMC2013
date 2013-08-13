@@ -1,0 +1,84 @@
+
+float s = 10;
+float r = 0;
+void setup(){
+  size(500, 400, P3D);
+}
+void draw(){
+  camera();
+  background(50);
+  translate(width/2, height/2, 280);
+  rotateX(-PI/4);
+  rotateY(r += 0.01);
+  
+  strokeWeight(1);
+  // one box
+  if(frameCount < 100){
+    fill(200, 0, 0);
+    pushMatrix();
+    translate(-7, -3, 0);
+   // translate(0,sin(frameCount/5.0)  + 4,0);
+  //  rotateX(0 + frameCount/20.0);
+    box(2, 2, 6);
+    popMatrix();
+  }
+ // many boxes
+  else if(frameCount < 200){
+  for(int i = 0; i < 15; i++){
+    fill(250 - i * 10, 0, 0);
+    pushMatrix();
+    translate(i-7, -3, 0);
+   // translate(0,sin(frameCount/5.0 + i),0);
+    //rotateX(i/10.0 + frameCount/20.0);
+    box(2, 2, 6);
+    popMatrix();
+  }
+  }
+  else if(frameCount < 300){
+  for(int i = 0; i < 15; i++){
+    fill(250-i * 10, 0, 0);
+    stroke(0);
+  //  noStroke();
+    pushMatrix();
+    translate(i-7, -3, 0);
+    translate(0,sin(frameCount/5.0 + i),0);
+   // rotateX(i/10.0 + frameCount/20.0);
+    box(2, 2, 6);
+    popMatrix();
+  }
+  }
+  
+  
+  else{
+  for(int i = 0; i < 15; i++){
+    fill(250-i * 10, 0, 0);
+    stroke(0);
+    noStroke();
+    pushMatrix();
+    translate(i-7, -3, 0);
+    translate(0,sin(frameCount/5.0 + i),0);
+    rotateX(i/10.0 + frameCount/20.0);
+    box(2, 2, 6);
+    popMatrix();
+  }
+  
+  
+  for(int i = 0; i < 15; i++){
+    fill(250-i * 10, 0, 0);
+    stroke(50, 200, 200);
+    noFill();
+    pushMatrix();
+    translate(i-7, -3, 0);
+    translate(0,sin(frameCount/5.0 + i),0);
+    rotateX(i/10.0 + frameCount/20.0);
+    scale(s,s,1);
+    box(2, 2, 6);
+    popMatrix();
+    s -= 0.003;
+    if( s <= 1){
+        s = 1;
+        }
+  }
+  }
+  
+}

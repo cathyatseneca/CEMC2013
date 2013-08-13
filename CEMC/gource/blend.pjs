@@ -1,0 +1,101 @@
+/* @pjs preload="data/1.jpg,data/2.jpg"; */
+
+//
+// Melt by Andor Salga
+//
+
+/* @pjs preload="dali.jpg, dali2.jpg"; */
+
+int SLICE_WIDTH = 3;
+ArrayList slices;
+
+PImage image_1 = null;
+PImage image_2 = null;
+
+int deltaTimer = 0;
+float pauseMeltTimer = 0;
+
+class Slice{
+  private int x;
+  private float y;
+  private float vel;
+  private PImage img;
+
+  Slice(int x, float y, PImage img){
+    this.x = x;
+    this.y = y;
+    this.img = img;
+  }
+
+  void setVelocity(float v){
+    this.vel = v;
+  }
+  
+  float getVelocity(){
+    return this.vel;
+  }
+
+  void draw(){
+    image(img, x, y);
+  }
+
+  void update(float delta){
+    if(y < height){
+      y += vel * delta;
+     }
+  }
+}
+
+void createSlices(PImage im){
+  slices = new ArrayList();
+  
+  for(int x = 0; x < im.width; x += SLICE_WIDTH){
+    PImage ImgSlice = im.get(x, 0, SLICE_WIDTH, height);
+    Slice s = new Slice(x, 0, ImgSlice);
+    s.setVelocity( random(0.1, 0.12));
+    slices.add(s);
+  }
+}
+
+void setup(){
+  size(400, 300);
+  slices = new ArrayList();
+  image_1 = loadImage("data/1.jpg");
+  image_2 = loadImage("data/2.jpg");
+
+  int timeCounter = 0;
+}
+
+float getDelta(){
+  float temp = millis() - deltaTimer;
+  deltaTimer = millis();
+  return temp;
+}
+
+void draw() {
+
+  float delta = getDelta();
+
+  // draw Static image in the background
+  image(image_1, 0, 0);
+
+  pauseMeltTimer += delta;
+
+  if(pauseMeltTimer >= 3000){
+    pauseMeltTimer = 0;
+
+    PImage temp = image_1;
+    image_1 = image_2;
+    image_2 = temp;  
+
+    createSlices(image_2);
+  }
+
+  // draw the melting image
+  for(int i = 0; i < slices.size(); i++){
+    Slice s = (Slice)slices.get(i);
+    s.update(delta);
+    s.draw();
+  }
+}
+

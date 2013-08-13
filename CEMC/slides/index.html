@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Processing.js - SIGGRAPH 2011</title>
+    <link href="style.css" rel="stylesheet" type="text/css" media="screen"/>
+    
+    <script>
+    var emptyFunc = function(){};
+    
+    var slideFuncs = {current: {onIn: emptyFunc, onOut: emptyFunc}};
+    
+    function startDemo(frameId, src){
+      var f = document.getElementById(frameId);
+      f.src = src;
+      f.marginHeight = 0;
+      f.scrolling = 'no';
+    }
+    
+    function stopDemo(frameId){
+      document.getElementById(frameId).src = "";
+    }
+    
+    var slideIndex = 0;
+    
+    function incrementSlideIndex(){
+      slideIndex++;
+    }
+    </script>
+    
+  </head>
+
+  <body>
+    <div class="presentation">
+      <div class="slides">
+ 
+
+
+
+        <script>incrementSlideIndex();</script>
+        <div class="slide">          
+            <iframe id="banner" width="100%" height="120" style="border:0px; margin-left: 0px; margin-top: 0px;"></iframe>
+             <script>             
+             slideFuncs['slide-' + slideIndex] = {
+               onIn: function(){startDemo("banner", '../banner/index.html');},
+               onOut: function(){stopDemo("banner");}
+             };
+             </script>
+         <section class="center intro">
+             <br/>
+             <h1>CEMC 2013</h1>
+              <p>Catherine Leung, Andrei Kopytov, Dylan Segna
+              <p>CDOT - Centre for Development of Open Technology</p>
+              <p>Seneca College</p>
+              <p>processingjs.org</p>
+                <br/>
+
+            <div style="float: 'left';">
+            <div id="footerlogo"; style="width:400px; ">
+            </div>
+            <img src="senecalogo.png" width="300px">&nbsp;&nbsp;&nbsp;
+            <img src="OSS_003_notext.png" width="75px">&nbsp;&nbsp;&nbsp;
+            <img src="processingjs.gif" width="75px">
+            </div>
+            
+          </section>
+        </div>
+
+
+        <script>incrementSlideIndex();</script>
+        <div class="slide">
+          <header>What is HTML5</header>
+          <section>
+            <ul>
+              <li>An update to HTML4</li>
+              <li>Rolling implementation.  Depending on browser some parts are done</li>
+            </ul>      
+          </section>
+        </div>
+
+        <script>incrementSlideIndex();</script>
+        <div class="slide">
+          <header>Browsers 2D Support</header>
+          <section>
+            <ul>
+              <li>To use Processing.js you minimally need the &lt;canvas&gt; tag</li>
+              <li>Firefox</li>
+              <li>Chrome</li>
+              <li>Safari</li>
+              <li>Opera</li>
+              <li>IE 9.0+</li>
+            </ul>      
+          </section>
+        </div>
+
+        <script>incrementSlideIndex();</script>
+        <div class="slide">
+          <header>Browser 3D Support</header>
+          <section>
+            <ul>
+              <li>For 3D functions you need webGL</li>
+              <li>Firefox</li>
+              <li>Chrome</li>
+              <li>Safari*</li>
+              <li>Opera*</li>
+	      <li>IE 11+*</li>
+              <li><a href="http://doesmybrowsersupportwebgl.com">http://doesmybrowsersupportwebgl.com</a></li>
+            </ul>      
+          </section>
+        </div>
+                
+
+        <script>incrementSlideIndex();</script>
+        <div class="slide">
+          <header>The Processing Language</header>
+          <section>
+
+          <div style="float:left; padding-right:50px;" width="850"> 
+          <iframe id="processingimg" width="500" height="500"></iframe>
+          <script>             
+             slideFuncs['slide-' + slideIndex] = {
+               onIn: function(){startDemo("processingimg", '../processingimg/index.html');},
+               onOut: function(){stopDemo("processingimg");}
+             };
+             </script>
+         </div>
+         <div width="600">
+             <ul>
+          <li>MIT - 2000</li>
+          <li>Ben Fry and Casey Reas</li>
+          <li>Easy to use graphics programming language for designers and artists</li>
+          </ul>
+          </div>
+         </section>
+        </div>
+
+        
+        <script>incrementSlideIndex();</script>
+        <div class="slide">
+          <header>Processing on the Web</header>
+          <section>
+            <ul>
+              <li>Processing is written in Java</li>
+              <li>Requires plugins</li>
+              <li>Limited interaction with other web content</li>
+            </ul>      
+          </section>
+        </div>
+        
+        
+        <script>incrementSlideIndex();</script>
+        <div class="slide">
+          <header>Processing.js - A Brief History</header>
+          <section>
+        <iframe id="gource" width="900" height="500"></iframe>
+          <script>
+             slideFuncs['slide-' + slideIndex] = {
+               onIn: function(){startDemo("gource", '../gource/index.html');},
+               onOut: function(){stopDemo("gource");}
+             };
+             </script>
+          </section>
+          <footer> <p style="font-size: 24px">The video was created with gource.  The sketches and text are controlled by popcorn.js</p></footer>
+        </div>
+                
+
+        <script>incrementSlideIndex();</script>
+        <div class="slide">
+          <header>Processing.js</header>
+         <section>
+         
+                     <ul>
+          <li>Parser</li>
+          <li>JavaScript Integration</li>
+          <li>Browser Unification</li>
+          <li>Mobile Integration</li>
+          </ul> 
+          </section>          
+        </div>
+        
+                   
+        
+        
+        
+        <script>incrementSlideIndex();</script>
+        <div class="slide">
+          <header>Credits</header>
+          <section>
+
+          <div style="float:left; padding-right:50px;" width="850"> 
+     <iframe id="tunnel" width="900" height="600"></iframe>
+          <script>             
+             slideFuncs['slide-' + slideIndex] = {
+               onIn: function(){startDemo("tunnel", '../tunnel/index.html');},
+               onOut: function(){stopDemo("tunnel");}
+             };
+             </script>
+         </div>
+         <div width="600">
+
+             <p>http://processingjs.org</p>
+             <p>http://cdot.senecac.on.ca</p>
+             <p></p>
+             <p>@processingjs<br/>
+
+
+          </div>
+        </section>
+        </div>
+        
+        
+          
+
+    </div> <!-- end presentation -->
+    <script src="slides.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <script src="../../mirror/codemirror.js" type="text/javascript"></script>
+    <script src="../../mirror/mirrorframe.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="../../mirror/docs.css"/>
+  </head>
+  
+  <body style="margin: 0px 0px 0px 0px;">
+
+<!------------------------------------------------->
+<!------------------------------------------------->
+<!------------------------------------------------->
+
+<textarea id="code" border="1">
+
+/* @pjs preload="bricks.jpg"; */
+ 
+PImage img;
+ 
+void setup(){
+  size(400, 400, P3D);
+  img = loadImage("bricks.jpg"); 
+  textureMode(NORMALIZED);
+  noStroke();
+}
+
+void draw(){
+  background(200);
+  translate(width/2, height/2, 200);
+  rotateX(-frameCount/200);
+  scale(50);
+  
+  beginShape(QUADS);
+  texture(img);
+  vertex(-1, -1, 0, 0, 0);
+  vertex( 1, -1, 0, 1, 0);
+  vertex( 1,  1, 0, 1, 1);
+  vertex(-1,  1, 0, 0, 1);  
+  endShape();
+}
+</textarea>
+<!------------------------------------------------->
+<!------------------------------------------------->
+<!------------------------------------------------->
+
+  <script type="text/javascript">
+    var textarea = document.getElementById('code');
+    
+    var editor = new CodeMirror(CodeMirror.replace(textarea), {
+      height: "620px",
+      width: "100%",
+      content: textarea.value,
+      parserfile: ["tokenizejavascript.js", "parsejavascript.js"],
+      stylesheet: "../../mirror/css/jscolors.css",
+      path: "../../mirror/js/",
+     // lineNumbers: true,
+      readOnly: true,
+      autoMatchParens: true
+    });
+  </script>
+
+  </body>
+</html>
